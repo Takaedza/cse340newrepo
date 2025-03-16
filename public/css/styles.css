@@ -1,6 +1,544 @@
 /******* Change Box Model ***************/
+html {
+  box-sizing: border-box;
+}
+
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+  box-sizing: inherit;
+}
+
+body {
+  max-width: 64rem;
+  margin: 0px auto 10px auto;
+  font-family: "Courier New", Courier, monospace;
+  background: 350px 350px;
+  background-image: url("../images/site/checkerboard.jpg");
+}
+
+body img {
+  max-width: 100%;
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-width: 48rem;
+  width: 100%;
+  margin: 0px auto 10px auto;
+  background-color: #ffffff;
+  border: solid 5px #01b0d3;
+  border-radius: 5px;
+}
+
+h1 {
+  padding: 10px 0 35px 0;
+  text-align: left;
+  margin: 10px 0 -8px 0;
+  font-size: 2em;
+}
+
+#tools {
+  float: right;
+  padding-top: 4%;
+  padding-right: 10px;
+}
+
+.container {
+  max-width: 100%;
+  background-color: #ffffff;
+  border: solid 5px #01b0d3;
+  border-radius: 5px;
+}
+
+header {
+  background-color: white;
+  color: black;
+  padding: 0px;
+  text-align: center;
+}
+
+#top-header {
+  margin: 10px 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#top-header .siteName {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+#top-header #tools {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+#top-header .siteName a,
+#top-header #tools a {
+  text-decoration: none;
+  color: black;
+}
+
+#top-header .siteName a:hover,
+#top-header #tools a:hover {
+  color: red;
+}
+
+/*navigation*/
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-left: 5px;
+  background-color: #3a3a3a;
+  width: 100%;
+  padding: 10px;
+  clear: both;
+  font-size: 1.2em;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+nav ul li{
+  display: inline-block;
+  flex-grow: 1;
+  text-align: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+nav a{
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+}
+
+nav li a:hover {
+  background-color: #01b0d3;
+  color: #3a3a3a;
+}
+
+/*main*/
+main {
+  display: block;
+  padding: 20px;
+}
+
+main img {
+  max-width: 100%;
+}
+
+.delorean-container {
+  position: relative;
+  margin: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delorean-container img {
+  width: 80%;
+  height: 100%;
+  object-fit: contain;
+  margin-left: 40px;
+}
+
+.delorean {
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+  background-clip: border-box;
+  color: #01b0d3;
+  position: absolute;
+  background-color: #bfc3c34c;
+  border: 1px solid rgba(100, 97, 97, 0.2);
+  border-radius: 0.25rem;
+  min-width: 0;
+  top: 0;
+  left: 60px;
+  width: max-content;
+}
+
+.delorean ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.delorean ul li{
+  list-style: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+button {
+  display: inline-block;
+  text-align: center;
+  font-size: 1.3em;
+  margin: 4px 2px;
+  cursor: pointer;
+  color: black;
+  background-color: #01b0d3;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+div .page-content {
+  display: grid;
+  margin: 0 auto;
+  max-width: 100%;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+
+.reviews {
+  grid-column: 2 / 2;
+  grid-row: 1 /1;
+  width: 40%;
+}
+
+.review li {
+  margin: 1rem;
+}
+
+.upgrades {
+  margin-bottom: 1em;
+}
+
+.upgrades .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 40px;
+  padding-left: 10px;
+}
+
+.upgrades .item {
+  width: 100%;
+  text-align: center;
+}
+
+.upgrades .item a {
+  font-weight: bold;
+  color: #131314;
+}
+
+upgrades h3 {
+  margin-bottom: 10px;
+  color: black;
+  padding: 10px;
+}
+
+.upgrades .item img {
+  display: block;
+  margin: 0 auto;
+  height: 90%;
+  background: #5f6364;
+  margin-bottom: 15px;
+}
+
+.item {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #01b0d3;
+  text-align: center;
+  border: #3a3a3a solid 2px;
+}
+
+#minigrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 10px;
+  padding-left: 10px;
+}
+
+.item:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.review h3 {
+  font-size: large;
+  color: black;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.review li {
+  font-size: large;
+  padding: 5px;
+  margin: 0;
+}
+
+.copyright {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}
+
+#inv-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#inv-display li {
+  margin: 1rem;
+  width: 300px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 0.5rem;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#inv-display li a {
+  text-decoration: none;
+  color: black;
+}
+
+#car-details {
+  display: flex;
+  padding: 1rem;
+}
+
+#car-details img {
+  width: 50%;
+  align-self: center;
+}
+
+.car-info {
+  list-style-type: none;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.car-info p {
+  padding: 0.5rem;
+}
+
+.car-details p:nth-child(even) {
+  background-color: lightgray;
+}
+
+@media (min-width: 48rem) {
+  /* CSS styles for screens larger than 48rem */
+
+  /* Adjust the max-width of the #wrapper element */
+  #wrapper {
+    max-width: 64rem;
+  }
+
+  /* Increase the font-size of the h1 element */
+  h1 {
+    font-size: 2.5em;
+  }
+
+  /* Adjust the padding of the #acctLink element */
+  #acctLink {
+    padding-top: 2%;
+  }
+
+  /* Increase the font-size of the navigation links */
+  nav a {
+    font-size: 1.4em;
+  }
+
+  /* Adjust the padding of the main content */
+  main {
+    padding: 30px;
+  }
+
+  /* Increase the size of the DeLorean image */
+  .delorean-container img {
+    width: 90%;
+  }
+
+  /* Adjust the font-size of the DeLorean text */
+  .delorean ul li {
+    font-size: 1.2rem;
+  }
+
+  /* Increase the size of the buttons */
+  button {
+    font-size: 1.5em;
+  }
+
+  /* Adjust the layout of the page content */
+  .page-content {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .upgrades {
+    grid-column: 1 / span 2;
+  }
+
+  /* Move the reviews section to the third column */
+  .reviews {
+    grid-column: 3 / 3;
+    width: 70%;
+  }
+
+  /* Increase the font-size of the review headings */
+  .review h3 {
+    font-size: x-large;
+  }
+
+  /* Increase the font-size of the review text */
+  .review li {
+    font-size: large;
+  }
+
+  /* Adjust the layout of the upgrades section */
+  .upgrades {
+    margin-bottom: 2em;
+  }
+
+  /* Increase the font-size of the upgrades headings */
+  .upgrades h3 {
+    font-size: x-large;
+  }
+
+  /* Increase the size of the upgrade images */
+  .upgrades .item img {
+    height: 100%;
+  }
+
+  /* Adjust the layout of the minigrid */
+  #minigrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  /* CSS styles for screens smaller than 600px */
+
+  /* Adjust the max-width of the #wrapper element */
+  #wrapper {
+    max-width: 100%;
+  }
+
+  /* Adjust the font-size of the h1 element */
+  h1 {
+    font-size: 1.5em;
+  }
+
+  /* Adjust the padding of the #acctLink element */
+  #tools {
+    padding-top: 2%;
+  }
+
+  /* Adjust the font-size of the navigation links */
+  nav a {
+    font-size: 1em;
+  }
+
+  /* Adjust the padding of the main content */
+  main {
+    padding: 10px;
+  }
+
+  /* Adjust the size of the DeLorean image */
+  .delorean-container img {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .delorean {
+    width: 40%;
+    height: 80px;
+    left: 30px;
+    font-size: x-small;
+  }
+
+  #vehicle-status {
+    flex-direction: column-reverse;
+    background-color: lightgray;
+    padding: 2rem;
+  }
+  #upgrades-section,
+  #reviews-section {
+    margin: 0 auto;
+    width: 100%;
+  }
+  #car-details {
+    flex-direction: column;
+  }
+  form fieldset {
+    width: 80%;
+  }
+
+  /* Adjust the font-size of the DeLorean text */
+  .delorean ul li {
+    font-size: 1rem;
+  }
+
+  /* Adjust the size of the buttons */
+  button {
+    font-size: 1em;
+  }
+
+  /* Adjust the layout of the page content */
+  .page-content {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  /* Move the reviews section below the upgrades section */
+  .reviews {
+    grid-column: 1 / span 2;
+    grid-row: 2 / 2;
+    justify-content: center;
+  }
+
+  /* Adjust the font-size of the review headings */
+  .review h3 {
+    font-size: medium;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Adjust the font-size of the review text */
+  .review li {
+    font-size: small;
+    text-align: center;
+  }
+
+  /* Adjust the layout of the upgrades section */
+  .upgrades {
+    grid-column: 1 / span 2;
+    grid-row: 1 / 1;
+    margin-bottom: 1em;
+  }
+
+  /* Adjust the font-size of the upgrades headings */
+  .upgrades h3 {
+    font-size: medium;
+  }
+
+  /* Adjust the size of the upgrade images */
+  .upgrades .item img {
+    height: auto;
+  }
+
+  /* Adjust the layout of the minigrid */
+  #minigrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    row-gap: 10px;
+    padding-left: 0;
+  }
 }
