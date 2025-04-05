@@ -5,15 +5,16 @@
 /* ***********************
  * Require Statements
  *************************/
-const session = require("express-session")
-const pool = require("./database/")
-const express = require("express")
-const env = require("dotenv").config()
-const baseController = require("./controllers/baseController")
-const app = express()
-const static = require("./routes/static")
-const expressEjsLayouts = require("express-ejs-layouts")
-const accountRoute = require("./routes/accountRoute")
+const session = require("express-session");
+const pool = require("./database/");
+const express = require("express");
+const env = require("dotenv").config();
+const baseController = require("./controllers/baseController");
+const app = express();
+const static = require("./routes/static");
+const expressEjsLayouts = require("express-ejs-layouts");
+const accountRoute = require("./routes/accountRoute");
+const inventoryRoute = require("./routes/inventoryRoute");
 
 /*************************
  * Middleware
@@ -50,6 +51,9 @@ app.use(static)
 
 // Index route
 app.get("/", baseController.buildHome)
+
+//Inventory routes
+app.use("/inv", inventoryRoute)
 
 /* ***********************
  * Local Server Information
