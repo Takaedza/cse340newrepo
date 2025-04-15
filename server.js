@@ -17,8 +17,7 @@ const accountRoute = require("./routes/accountRoute");
 const inventoryRoute = require("./routes/inventoryRoute");
 const utilities = require("./utilities/");
 const bodyParser = require("body-parser");
-const flash = require("connect-flash");
-const expressMessages = require("express-messages");
+
 
 /*************************
  * Middleware
@@ -28,16 +27,16 @@ app.use(session({
     createTableIfMissing: true,
     pool,
   }),
-  secret: process.env.SESSION_SECRET || 'defualt_secret',
-  resave: false,
-  saveUninitialized: false,
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
   name: 'sessionId',
 }))
 
 //Express Messages Middleware
-app.use(require('flash')())
+app.use(require('connect-flash')())
 app.use(function (req, res, next) {
-  res.locals.messages = req.flash('error');
+  res.locals.messages = require('express-messages')(req, res)
   next()
 })
 
