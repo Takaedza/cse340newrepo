@@ -1,8 +1,73 @@
-const express = require("express");
-const router = new express.Router();
-const invController = require("../controllers/invController");
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
+const inventoryController = require("../controllers/inventoryController")
+const utilities = require("../utilities/")
+const invValidate = require('../utilities/inventory-validation')
 
-//Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+// Route to build inventory by classification view
+router.get("/type/:classification_Id", utilities.handleErrors(invController.buildByClassificationId));
+router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildVehicleDetailsPage));
+router.get("/error", utilities.handleErrors(invController.buildErrorPage));
+router.get("/", utilities.handleErrors(invController.buildManagement));
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+router.get("/get-inventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventoryView))
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteInventoryView))
+router.get("/reviews", utilities.handleErrors(invController.getAllReviews))
 
+
+
+router.use(utilities.checkLogin)
+router.use(utilities.checkAccountType)
+
+// POST
+router.post(
+    "/add-classification",
+    invValidate.addClassificationRules(),
+    invValidate.checkAddClassificationData,
+    invController.registerNewClassification
+  )
+router.post(
+  "/addReview",
+  invController.addReview
+)
+
+// Add a new review
+router.post("/reviews",
+  invController.addReview
+)
+
+// Edit an existing review
+router.put("/reviews/:id",
+  invController.updateReview
+)
+
+// Delete an existing review
+router.delete("/reviews/:id",
+  invController.deleteReview
+
+)
+
+router.post(
+    "/add-inventory",
+    invValidate.addVehicleRules(),
+    invValidate.checkAddVehicleData,
+    invController.registerNewVehicle
+)
+router.post(
+  "/update/",
+  invValidate.addVehicleRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
+
+// Route to delete inventory item
+router.post(
+  "/delete/",
+  utilities.handleErrors(invController.deleteInventory)
+)
+  
 module.exports = router;
+

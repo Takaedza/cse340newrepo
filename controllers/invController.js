@@ -1,6 +1,5 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
-
 const invCont = {}
 
 /* ***************************
@@ -18,7 +17,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     grid,
   })
 }
-/*
+
 invCont.buildVehicleById = async function (req, res, next) {
   const inventory_id = req.params.inventoryId
   const data = await invModel.getInventoryByInventoryId(inventory_id)
@@ -176,11 +175,10 @@ invCont.registerNewVehicle = async function (req, res) {
 
     })
   }
-*/ //to be removed
+
    /* ***************************
  *  Return Inventory by Classification As JSON
  * ************************** */
-/*
   invCont.getInventoryJSON = async function (req, res, next) {
     console.log(req.params.classification_id)
     const classification_id = parseInt(req.params.classification_id)
@@ -193,29 +191,11 @@ invCont.registerNewVehicle = async function (req, res) {
       next(new Error("No data returned"))
     }
   }
-  */ //to be removed
 
-  //   /* ***************************
-  //  *  Return Inventory by Classification As JSON
-  //  * ************************** */
-  // invCont.getInventoryJSON = async (req, res, next) => {
-  //   const classification_id = parseInt(req.params.classification_id);
-
-  //   if (isNaN(classification_id)) {
-  //     return next(new Error("Invalid classification_id"));
-  //   }
-
-  //   const invData = await invModel.getInventoryByClassificationId(
-  //     classification_id
-  //   );
-
-  //   return res.json(invData);
-  //   };
   
   /* ***************************
  *  Update Inventory Data
  * ************************** */
-/*
   invCont.updateInventory = async function (req, res) {
     let nav = await utilities.getNav()
     const inventoryData = req.body
@@ -252,11 +232,10 @@ invCont.registerNewVehicle = async function (req, res) {
       })
     }
   }
-*/ //to be removed
+
   /* ***************************
    *  Delete Inventory Data
    * ************************** */
-  /*
   invCont.deleteInventory = async function (req, res) {
     let nav = await utilities.getNav()
     const inv_id = parseInt(req.body.inv_id)
@@ -319,6 +298,6 @@ invCont.deleteReview =
       inv_price: itemData[0].inv_price,
     })
   }
-*/ //to be removed  
+  
 
 module.exports = invCont

@@ -12,8 +12,6 @@ async function getClassifications() {
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
-
-
 async function getInventoryByClassificationId(classification_id) {
     try {
       const data = await pool.query(
@@ -28,7 +26,7 @@ async function getInventoryByClassificationId(classification_id) {
       console.error("getclassificationsbyid error " + error)
     }
   }
-/*
+
   async function getInventoryByInventoryId(inv_id) {
   try {
     const data = await pool.query(
@@ -43,11 +41,10 @@ async function getInventoryByClassificationId(classification_id) {
   console.error("getinventorybyinvetoryid error " + error)
   }
 }
-******************************** */ /*to be removed*/
+
 /*
 Duplicate functions of get inv by inv id for return as list
 */
-/*
 async function getInventoryByInventoryIdAsList(inv_id) {
   console.log(inv_id)
   try {
@@ -91,11 +88,10 @@ async function registerNewVehicle(inv_make, inv_model, inv_year, inv_description
     return error.message
   }
 }
-*/ /*to be removed*/
+
 /* ***************************
  *  add new classification
  * ************************** */
-/*
 async function addNewClassification(classificationName) {
   try {
     const result = await pool.query(
@@ -112,11 +108,10 @@ async function addNewClassification(classificationName) {
     }
   }
 }
-*/ /*to be removed*/
+
 /* ***************************
  *  add new inventory
  * ************************** */
-/*
 async function addNewInventory(
   inv_make,
   inv_model,
@@ -155,9 +150,8 @@ async function addNewInventory(
     }
   }
 }
-*/ /*to be removed*/
+
 //Update / change value inventory to the database
-/*
 async function updateInventory(inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id){
   try {
     const sql = "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_image = $4, inv_thumbnail = $5, inv_price = $6, inv_year = $7, inv_miles = $8, inv_color = $9, classification_id = $10 WHERE inv_id = $11 RETURNING *"
@@ -190,12 +184,11 @@ async function deleteInventoryItem(inv_id) {
     new Error("Delete Inventory Error")
   }
 }
-*/ /*to be removed*/
+
 
 /* **********************
  *   Check for existing classification name
  * ********************* */
-/*
 async function checkExistingName(classification_name) {
   try {
     const sql = "SELECT * FROM classification WHERE classification_name = $1"
@@ -205,7 +198,6 @@ async function checkExistingName(classification_name) {
     return error.message
   }
 }
-*/ /*to be removed*/
 
 // /* ***************************
 //  *  Get all inventory items and classification_name by classification_id
@@ -213,9 +205,9 @@ async function checkExistingName(classification_name) {
 // async function getInventoryByClassificationId(classification_id) {
 //   try {
 //     const data = await pool.query(
-//       `SELECT * FROM public.inventory AS i
-//       JOIN public.classification AS c
-//       ON i.classification_id = c.classification_id
+//       `SELECT * FROM public.inventory AS i 
+//       JOIN public.classification AS c 
+//       ON i.classification_id = c.classification_id 
 //       WHERE i.classification_id = $1`,
 //       [classification_id]
 //     )
@@ -225,12 +217,10 @@ async function checkExistingName(classification_name) {
 //   }
 // }
 
-
 /* ***************************
  *  Get a specific vehicle by inventory id
  * ************************** */
 
-/*
 async function getVehicleById(inv_id) {
   try {
     const data = await pool.query(
@@ -242,5 +232,5 @@ async function getVehicleById(inv_id) {
     console.error(`getVehicleById error ${error}`)
   }
 }
-*/ /*to be removed*/
-module.exports = { getClassifications, getInventoryByClassificationId/*, getVehicleById,addNewClassification, checkExistingName, addNewInventory, getInventoryByInventoryId, registerNewClassification, checkExistingClassification,  registerNewVehicle, deleteInventoryItem, updateInventory, getInventoryByInventoryIdAsList*/ }
+
+module.exports = { getClassifications, getInventoryByClassificationId, getVehicleById,addNewClassification, checkExistingName, addNewInventory, getInventoryByInventoryId, registerNewClassification, checkExistingClassification,  registerNewVehicle, deleteInventoryItem, updateInventory, getInventoryByInventoryIdAsList }

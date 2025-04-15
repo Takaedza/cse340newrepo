@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
-//require("dotenv").config()
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const Util = {}
 
 
@@ -7,29 +8,33 @@ const Util = {}
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-    row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
-}
+  try {
+    let data = await invModel.getClassifications();
+    let list = "<ul>";
+    list += '<li><a href="/" title="Home page">Home</a></li>';
+    data.rows.forEach((row) => {
+      list += "<li>";
+      list +=
+        '<a href="/inv/type/' +
+        row.classification_id +
+        '" title="See our inventory of ' +
+        row.classification_name +
+        ' vehicles">' +
+        row.classification_name +
+        "</a>";
+      list += "</li>";
+    });
+    list += "</ul>";
+    return list;
+  } catch (error) {
+    console.error("Error fetching navigation:", error);
+    return "<ul><li><a href='/'>Home</a></li></ul>"; // Fallback nav
+  }
+};
 
 /* ************************
  * Constructs the options HTML for classification select element
  ************************** */
-/*
 Util.getClassificationOptions = async function (selectedId) {
   let data = await invModel.getClassifications();
   let options = "";
@@ -40,11 +45,10 @@ Util.getClassificationOptions = async function (selectedId) {
   });
   return options;
 };
-*/ //to be removed
+
 /* **************************************
  * Build the classification view HTML
  * ************************************ */
-
 Util.buildClassificationGrid = async function (data) {
   let grid 
   if (data.length > 0) {
@@ -78,7 +82,7 @@ Util.buildClassificationGrid = async function (data) {
 /* **************************************
  * Build the detail view HTML
  * ************************************ */
-/*
+
 Util.buildCarDetail = async function (data) {
   let content = `
     <div class="car-details">
@@ -97,11 +101,10 @@ Util.buildCarDetail = async function (data) {
     </div>`
   return content
 }
-*/ //to be removed
+
 /* ****************************************
  * Set up the view for the vehicle detail page
  **************************************** */
-/*
 Util.buildInventoryDetailView = async function(vehicle){
   let grid
   let data = vehicle[0]
@@ -132,18 +135,8 @@ Util.buildManagementLinks = async function() {
   links += '<a class="management-links" href="../../inv/add-inventory"><h2>Add New Vehicle</h2></a>'
   return links
 }
-*/ //to be removed
-// Util.getDropDownClassification = async function (req, res, next) {
-//   let data = await invModel.getClassifications()
-//   let select = '<label for="classification_id">Classification</label>'
-//   select += '<select id="classification_id" name="classification_id">'
-//   data.rows.forEach((row) => {
-//     select += '<option value="' + row.classification_id + '">' + row.classification_name + '</option>'
-//   })
-//   select += "</select>"
-//   return select
-// }
-/*
+
+
 Util.selectClassification = async function (selectedClassificationId) {
   let data = await invModel.getClassifications();
   let select = '<label for="classification_id">Select Classification: </label><br>';
@@ -158,13 +151,71 @@ Util.selectClassification = async function (selectedClassificationId) {
   select += '</select>';
   return select;
 }
-*/ //to be removed
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for
  * General Error Handling
  **************************************** */
+Util.handleErrors = fn => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next)
 
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+  if (req.cookies.jwt) {
+   jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+     if (err) {
+      req.flash("Please log in")
+      res.clearCookie("jwt")
+      return res.redirect("/account/login")
+     }
+     res.locals.accountData = accountData
+     res.locals.loggedin = 1
+     next()
+    })
+  } else {
+   next()
+  }
+ }
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    next()
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+ 
+ Util.checkAccountType = (req, res, next) => {
+  if (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin") {
+    next()
+  } else {
+    req.flash("notice", "You are not authorized. Please log in!.")
+    return res.redirect("/account/login")
+  }
+}
+
+Util.checkAccountType =(isLoggedIn, accountType) => {
+  let managementGrid
+  
+  if (isLoggedIn && (accountType === "Admin" || accountType === "Employee")) {
+    managementGrid = '<h2> Inventory Management </h2>'
+    managementGrid += '<a id="inv-management-button" href="../../inv/" title="Inventory Management View "><h3>Manage Inventory</h3></a>'
+  }else{
+    managementGrid = ''
+  }
+  return managementGrid
+}
+ 
+
 
 module.exports = Util
