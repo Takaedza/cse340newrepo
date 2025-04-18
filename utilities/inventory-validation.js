@@ -1,154 +1,219 @@
-const utilities = require(".")
-const { body, validationResult } = require("express-validator")
-const invModel = require("../models/inventory-model")
-const validate = {}
+const utilities = require("../utilities");
+const invModel = require("../models/inventory-model");
+const { body, validationResult } = require("express-validator");
+const validate = {};
 
-/*  **********************************
- *  Registration Data Validation Rules
+/* **********************************
+ *  Add classification Data Validation Rules
  * ********************************* */
-validate.addClassificationRules = () => {
-    return [
-      // classification_name alphabet only, no special characters, no spaces
-      body("classification_name")
-        .trim()
-        .isAlpha()
-        .withMessage("Valid classification name is required.")
-        .isLength({ min: 1 })
-        .withMessage("Valid classification name is required.") // on error this message is sent.
-        .custom(async (classification_name) => {
-            const classificationExists = await invModel.checkExistingClassification(classification_name)
-            if (classificationExists){
-              throw new Error("Classification name exists. Try a different one.")
-            }
-        }),
-    ]
-}
+validate.classificationRules = () => {
+  return [
+    // firstname is required and must be string
+    body("classification_name")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isAlphanumeric()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a valid classification name."), // on error this message is sent.
+  ];
+};
 
-validate.checkAddClassificationData = async (req, res, next) => {
-    const { classification_name } = req.body
-    let errors = []
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      let nav = await utilities.getNav()
-      res.render("inventory/add-classification", {
-        errors,
-        title: "Add New Classification",
-        nav,
-        classification_name,
-      })
-      return
-    }
-    next()
+/* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
+validate.checkClassificationData = async (req, res, next) => {
+  const { classification_name } = req.body;
+  let errors = [];
+  errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav();
+    res.render("inventory/addClassification", { // Try again
+      errors,
+      title: "Add Classification",
+      nav,
+      classification_name,
+    });
+    return;
   }
+  next();
+};
 
-validate.addVehicleRules = () => {
-    return [
-        body("inv_make")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide a make."),
+/* **********************************
+ *  Add inventory Data Validation Rules
+ * ********************************* */
+validate.inventoryRules = () => {
+  return [
+    // Make is required and must be string
+    body("inv_make")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Make value is missing")
+      .isLength({ min: 1 })
+      .withMessage("Please provide a make."), // on error this message is sent.
 
-        body("inv_model")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide a model."),
-        
-        body("inv_description")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide a description."),
+    body("inv_model")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a model."),
 
-        body("inv_image")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide an image path."),
+    body("inv_year")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Year value missing.")
+      .isNumeric()
+      .withMessage("Year must be a number."),
 
-        body("inv_thumbnail")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide a thumbnail path."),
+    body("inv_description")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a description."),
 
-        body("inv_price")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide a price."),
+    body("inv_image")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide an image."),
 
-        body("inv_year")
-        .trim()
-        .isLength({ min: 4, max: 4 })
-        .withMessage("Please provide a valid year."),
+    body("inv_thumbnail")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a thumbnail."),
 
-        body("inv_miles")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide miles."),
+    body("inv_price")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Price value is missing.")
+      .isNumeric()
+      .withMessage("Price must be a number."),
 
-        body("inv_color")
-        .trim()
-        .isLength({ min: 1 })
-        .withMessage("Please provide a color."),
-    ]
-}
+    body("inv_miles")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Miles value is missing.")
+      .isNumeric()
+      .withMessage("Miles must be a number."),
 
-validate.checkAddVehicleData = async (req, res, next) => {
-     const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles,  inv_color, classification_id} = req.body
-    const classificationSelect = await utilities.selectClassification(classification_id)
-    let errors = []
-    const itemName = `${inv_make} ${inv_model}`
-    errors = validationResult(req)
-    if(!errors.isEmpty()){
-        let nav = await utilities.getNav()
-        res.render("./inventory/edit-inventory", {
-            title: "Edit " + itemName,
-            nav,
-            classificationSelect,
-            errors,
-            inv_id,
-            inv_make, 
-            inv_model, 
-            inv_year, 
-            inv_description, 
-            inv_image, 
-            inv_thumbnail, 
-            inv_price, 
-            inv_miles, 
-            inv_color,
-            classification_id
-        })
-        return
-    }
-    next()
-}
-  
-/* Edit Inventory errors directs back to edit view*/ 
+    body("inv_color")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .withMessage("Please provide a color."),
+
+    body("classification_id")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 1 })
+      .isInt()
+      .withMessage("Please provide a make."),
+  ];
+};
+
+/* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
+validate.checkInventoryData = async (req, res, next) => {
+  let errors = [];
+  errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const {
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body;
+    let classifications = await utilities.buildClassificationList(
+      classification_id
+    );
+    let nav = await utilities.getNav();
+    res.render("inventory/addInventory", { // Try again
+      errors,
+      title: "Add Inventory",
+      nav,
+      classifications,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+    return;
+  }
+  next();
+};
+
+
+
+
+/* ******************************
+ * Check data and return errors or continue to update. Errors will redirect to edit view
+ * ***************************** */
 validate.checkUpdateData = async (req, res, next) => {
-     const { inv_id, inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles,  inv_color, classification_id} = req.body
-    const classificationSelect = await utilities.selectClassification(classification_id)
-    let errors = []
-    const itemName = `${inv_make} ${inv_model}`
-    errors = validationResult(req)
-    if(!errors.isEmpty()){
-        let nav = await utilities.getNav()
-        res.render("./inventory/edit-inventory", {
-            title: "Edit " + itemName,
-            nav,
-            classificationSelect,
-            errors,
-            inv_id,
-            inv_make, 
-            inv_model, 
-            inv_year, 
-            inv_description, 
-            inv_image, 
-            inv_thumbnail, 
-            inv_price, 
-            inv_miles, 
-            inv_color,
-            classification_id
-        })
-        return
-    }
-    next()
-}
+  let errors = [];
+  errors = validationResult(req);
 
-module.exports = validate
+  if (!errors.isEmpty()) {
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body;
+    let classifications = await utilities.buildClassificationList(
+      classification_id
+    );
+    let nav = await utilities.getNav();
+    res.render("inventory/editInventory", { // Try again
+      errors,
+      title: "Edit " + inv_make + " " + inv_model,
+      nav,
+      classifications,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+    return;
+  }
+  next();
+};
+
+
+module.exports = validate;

@@ -1,103 +1,49 @@
-/*******************************************
- * Account routes
- * week 4 deliver login view
- * **************************************** */
-//Needed resources
-const express = require("express")
-const router = new express.Router()
-const utilities = require("../utilities/")
-const accountController = require("../controllers/accountController")
-const regValidate = require("../utilities/account-validation")
-const Util = require("../utilities/")
+// Needed Resources
+const express = require("express");
+const router = new express.Router();
 
-// Route to build login page
-router.get("/login", utilities.handleErrors(accountController.buildLogin))
+const accountController = require("../controllers/accountController");
+const utilities = require("../utilities");
+const regValidate = require("../utilities/account-validation");
 
-// Route to build register page
-router.get(
-  "/register",
-  utilities.handleErrors(accountController.buildRegister)
-)
 
-// Route to process register page
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView));
+
+// Route to build account view
+router.get("/login", utilities.handleErrors(accountController.buildLogin));
 router.post(
-  "/register",
-  regValidate.registationRules(),
-  regValidate.checkRegData,
-  utilities.handleErrors(accountController.registerAccount)
-)
-// Route to checklogin
-router.get(
-  "/", 
-  utilities.checkLogin,
-  utilities.handleErrors(accountController.account))
-
-// Process the login attempt
-router.post("/login",
+  "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
-)
-
-// Process update
-router.get("/update", Util.checkLogin, Util.handleErrors(accountController.update))
-
-router.post("/update", regValidate.updateAccountRules(), regValidate.checkUpdateData, Util.handleErrors(accountController.successUpdateData))
-
-router.post("/change", regValidate.updatePasswordRules(), regValidate.checkUpdateData, Util.handleErrors(accountController.successUpdatePassword))
-
-
-// Route to build manage account page
-router.get(
-  "/manage-account",
-  utilities.checkLogin,
-  utilities.handleErrors(accountController.buildAccountManagement)
 );
 
-// Route to build update profile page
-router.get(
-  "/update-profile",
-  utilities.checkLogin,
-  utilities.handleErrors(accountController.buildUpdateProfile)
+// Route to logout
+router.get("/logout", utilities.handleErrors(accountController.accountLogout));
+
+// Registration handlers
+router.get("/registration", utilities.handleErrors(accountController.buildRegister));
+router.post(
+  "/register",
+  regValidate.registrationRules(),
+  regValidate.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
 );
 
-// Route to build update password page
-router.get(
+// Update account handlers
+router.get("/update/:accountId", utilities.handleErrors(accountController.buildUpdate));
+router.post(
+  "/update",
+  regValidate.updateRules(), // TODO: This needs to have a separate rule set, without existing email check..unless...oh complex
+  regValidate.checkUpdateData,
+  utilities.handleErrors(accountController.updateAccount)
+  );
+router.post(
   "/update-password",
-  utilities.checkLogin,
-  utilities.handleErrors(accountController.buildUpdatePassword)
+  regValidate.updatePasswordRules(),
+  regValidate.checkUpdatePasswordData,
+  utilities.handleErrors(accountController.updatePassword)
 );
 
-// // Route to build update profile page
-// router.post(
-//   "/update-profile",
-//   regValidate.profileRules(),
-//   regValidate.checkProfileData,
-//   utilities.handleErrors(accountController.updateProfile)
-// );
 
-// // Route to build update password page
-// router.post(
-//   "/update-password",
-//   regValidate.passwordRules(),
-//   regValidate.checkPasswordData,
-//   utilities.handleErrors(accountController.updatePassword)
-// );
-
-
-
-// Process the logout request
-router.get("/logout", function (req, res) {
-  req.session.destroy(function (err) {
-    if (err) {
-      console.log(err)
-    } else {
-      res.clearCookie("jwt")
-      res.redirect("/")
-    }
-  })
-})
-
-
-
-module.exports = router
+module.exports = router;

@@ -1,187 +1,175 @@
-/******* Change Box Model ***************/
-html {
-  box-sizing: border-box;
+:root {
+  --primary-fg: rgb(0, 0, 128);
+  --primary-bg: rgb(234, 242, 247);
+  --secondary-fg: rgb(236, 229, 209);
+  --secondary-bg: rgb(64, 35, 169);
+  --pop: #04062a;
+  --decorative-font: "Anta", sans-serif;
+  --body-font: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/******* Change Box Model ***************/
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
+}
+
+header, footer, main {
+  padding: 1rem;
 }
 
 body {
-  max-width: 64rem;
-  margin: 0px auto 10px auto;
-  font-family: "Courier New", Courier, monospace;
-  background: 350px 350px;
-  background-image: url("../images/site/checkerboard.jpg");
+  background-image: url('/images/site/small_check.jpg');
+  background-position: top;
+  background-attachment: fixed;
+  background-repeat: repeat-y;
+  margin: 0;
+  font-family: var(--body-font);
+  border-radius: 0;
+  border-width: 0;
+  transition: padding 1s;
 }
 
-body img {
-  max-width: 100%;
-}
-
-#wrapper {
-  display: flex;
-  flex-direction: column;
-  /*min-height: 100vh;*/
-  height: auto;
-  max-width: 48rem;
-  width: 100%;
-  margin: 0px auto 10px auto;
-  background-color: #ffffff;
-  border: solid 5px #01b0d3;
-  border-radius: 5px;
-}
-
-h1 {
-  padding: 10px 0 35px 0;
-  text-align: left;
-  margin: 10px 0 -8px 0;
-  font-size: 2em;
-}
-
-#acctLink {
-  float: right;
-  padding-top: 4%;
-  padding-right: 10px;
-}
-
-.container {
-  max-width: 100%;
-  background-color: #ffffff;
-  border: solid 5px #01b0d3;
-  border-radius: 5px;
-}
-
-/* header styles */
 header {
-  background-color: white;
-  color: black;
-  padding: 0px;
-  text-align: center;
-}
-
-#top-header {
-  margin: 10px 0;
-  padding: 10px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 }
-
-#top-header .siteName {
-  font-size: 2em;
-  font-weight: bold;
-}
-
-#top-header #tools {
-  font-size: 0.8em;
-  font-weight: bold;
-}
-
-#top-header .siteName a,
-#top-header #tools a {
-  text-decoration: none;
-  color: black;
-}
-
-#top-header .siteName a:hover,
-#top-header #tools a:hover {
-  color: red;
-}
-
-/* Navigation */
 nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin-left: 5px;
-  background-color: #3a3a3a;
+  color: var(--secondary-fg);
+  background-color: var(--secondary-bg);
+  background-image: linear-gradient(90deg, var(--secondary-bg), rgba(255, 255, 255, 0.258), var(--secondary-bg));
   width: 100%;
-  padding: 10px;
-  clear: both;
-  font-size: 1.2em;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.703);
 }
 
 nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  /* Handle this later with a burger */
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
 }
-
-nav ul li {
-  display: inline-block;
-  flex-grow: 1;
-  text-align: center;
-  margin-left: 1rem;
-  margin-right: 1rem;
+main {
+  display: flex;
+  flex-direction: column;
+}
+footer {
+  overflow: hidden;
 }
 
 nav a {
+  display: inline-block;
+  color: unset;
+  filter: brightness(1.1);
   text-decoration: none;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px;
+  transition: transform .5s;
+}
+nav a:hover {
+  transform: scale(1.1);
+  transition: transform .5s;
 }
 
-nav li a:hover {
-  background-color: #01b0d3;
-  color: #3a3a3a;
+a {
+  color: unset;
+}
+a:hover {
+  filter: brightness(1.4);
 }
 
-/* main */
-main {
-  display: block;
-  padding: 20px;
+input:read-only {
+  background-color: rgba(255, 255, 255, 0.55);
 }
 
-main img {
-  max-width: 100%;
-}
-
-.delorean-container {
-  position: relative;
-  margin: 10px;
+nav ul {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
+  text-decoration: none;
+  justify-content: space-around;
+  list-style: none;
+  padding: .5rem 2rem .5rem 2rem;
+  gap: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
 }
 
-.delorean-container img {
-  width: 80%;
-  height: 100%;
-  object-fit: contain;
-  margin-left: 40px;
+h1, h2, h3, h4 {
+  font-family: var(--decorative-font);
 }
 
-.delorean {
+
+
+#wrapper {
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.498);
+}
+
+.content {
   display: flex;
   flex-direction: column;
-  word-wrap: break-word;
-  background-clip: border-box;
-  color: #01b0d3;
-  position: absolute;
-  background-color: #bfc3c34c;
-  border: 1px solid rgba(100, 97, 97, 0.2);
-  border-radius: 0.25rem;
-  min-width: 0;
-  top: 0;
-  left: 60px;
-  width: max-content;
 }
 
-.delorean ul {
+.siteName a {
+  font-family: var(--decorative-font);
+  font-size: 2rem;
+  text-decoration: none;
+  color: var(--primary-fg);
+  font-size: 2.5rem;
+}
+.no-bullet {
   list-style: none;
-  padding-left: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.delorean ul li {
+#tools a {
+  /* text-decoration: none; */
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  display: block;
+}
+
+/* Hero */
+.hero {
+  padding: 1rem;
+  background-color: white;
+  width: 100%;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  border-radius: .5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.111);
+}
+
+.hero img {
+  width: 80%;
+  grid-column: 1/4;
+  grid-row: 1/2;
+  justify-self: center;
+
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  width: fit-content;
+  background-color: rgba(255, 255, 255, 0.703);
+  color: var(--pop);
+  padding: .5rem;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.092);
+}
+.hero-text input {
+  align-self: center;
+}
+
+
+.hero ul {
   list-style: none;
-  font-size: 1.1rem;
-  font-weight: bold;
+  padding: 0;
 }
 
 button {
@@ -197,753 +185,358 @@ button {
   border-radius: 3px;
 }
 
-div.page-content {
-  display: grid;
-  margin: 0 auto;
-  max-width: 100%;
-  grid-template-columns: 1fr 1fr;
-
-  column-gap: 10px;
+button:hover{
+  background-color: rgba(0, 162, 255, 0.324);
+  transform: translateY(-2px);
+  transition: .3s box-shadow, .3s transform;
 }
 
-.reviews {
-  grid-column: 2 / 2;
-  grid-row: 1 / 1;
-  width: 40%;
-}
-
-.review li {
-  margin: 1rem;
-}
-
-.upgrades {
-  margin-bottom: 1em;
-}
-
-.upgrades .items {
+/* Gallery */
+.gallery {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
-  row-gap: 40px;
-  padding-left: 10px;
+  gap: 1rem;
+  padding-left: .1rem;
+  padding-right: .1rem;
 }
 
-.upgrades .item {
+
+/* Caption Image */
+.caption-image {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--secondary-bg);
+  /* border: 2px solid var(--primary-fg); */
+  color: var(--secondary-fg);
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.caption-image > div {
+  
+  /* border: 1px solid var(--secondary-fg); */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+.caption-image > p {
+  padding: .5rem;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.127);
   width: 100%;
   text-align: center;
+  color: var(--secondary-fg);
 }
 
-.upgrades .item a {
-  font-weight: bold;
-  color: #131314;
+/* General use classes */
+.button-blue {
+  background-color: var(--pop);
+  color: white;
+  border: 0;
+  border-radius: .3rem;
+  padding: .5rem;
 }
 
-.upgrades h3 {
-  margin-bottom: 10px;
-  color: black;
-  padding: 10px;
+ul.open {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.upgrades .item img {
-  display: block;
-  margin: 0 auto;
-  height: 90%;
-  background: #5f6364;
-  margin-bottom: 15px;
-}
-
-.item {
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  background-color: #01b0d3;
-  text-align: center;
-  border: #3a3a3a solid 2px;
-}
-
-#minigrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 10px;
-  padding-left: 10px;
-}
-
-.item:hover {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.review h3 {
-  font-size: large;
-  color: black;
-  padding: 10px;
-  margin-top: 20px;
-}
-
-.review li {
-  font-size: large;
-  padding: 5px;
+ul#inv-display {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
   margin: 0;
 }
 
-.copyright {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
+ul#inv-display > li {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: 350px;
+  background-color: var(--secondary-bg);
+  color: var(--secondary-fg);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.173);
 }
-
-#inv-display {
+ul#inv-display > li a {
+  grid-column: 1/2;
+  grid-row: 1/2;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
 }
-#inv-display li {
-  margin: 1rem;
-  width: 300px;
-  border: 1px solid black;
-  border-radius: 8px solid black;
-  padding: 0.5rem;
-  list-style-type: none;
+ul#inv-display > li img {
+  width: 100%;
+}
+ul#inv-display > li div.namePrice {
+  padding: 1rem;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  justify-content: end;
+  text-shadow: 0 0 25px var(--secondary-bg), 0 0 3px black;
 }
-#inv-display li a {
-  text-decoration: none;
-  color: black;
-}
-#car-details {
+
+  /* Error page styles */
+div.error-display {
   display: flex;
-  padding: 1rem;
+  flex-direction: column;
 }
-#car-details img {
+div.error-display img {
   width: 50%;
   align-self: center;
 }
-#car-details {
+
+/* Car list styles section */
+section.car-listing {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+section.car-listing img {
+  width: 100%;
+  border-bottom: 10px solid var(--secondary-bg);
+}
+section.car-listing div.car-information {
+  grid-row: 2/4;
+  grid-column: 1/2;
+  background-color: #fff6;
+  text-shadow: 0 0 7px white;
+  backdrop-filter: blur(2px);
   padding: 1rem;
 }
-.car-info {
-  list-style-type: none;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-.car-info p {
-  padding: 0.5rem;
-}
-.car-details p:nth-child(even) {
-  background-color: lightgray;
+section.car-listing dl dt {
+  font-size: 1.1rem;
+  font-weight: bolder;
 }
 
-/*CSS for the Login Page*/
-
-form fieldset {
-  background-color: lightgray;
-  width: 50%;
-  margin: auto;
-}
-
-form fieldset input {
-  display: block;
-  width: 100%;
-}
-
-#submit {
-  width: 25%;
-  margin: auto;
-}
-
-form input,
-form label,
-form legend,
-form span {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  margin: 0;
-  margin-bottom: 1rem;
-}
-
-.form-italics {
-  display: block;
-  margin: 0.5rem;
-}
-
-input:required:invalid,
-input:focus:invalid {
-  /* insert your own styles for invalid form input */
-  background-color: rgb(132, 130, 130);
-}
-
-input:required:valid {
-  /* insert your own styles for valid form input */
-  background-color: rgb(132, 130, 130);
-}
-
+/* Week 4 */
 .notice {
-  font-size: larger;
-  color: red;
-  font-style: italic;
-  list-style-type: none;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: rgb(184, 194, 0);
+  list-style: none;
+  background-color: rgba(0, 0, 0, 0.747);
+  padding: .5rem;
+  border-radius: 3px;
+}
+.notice li::before {
+  content: "> ";
 }
 
-@media (min-width: 48rem) {
-  /* CSS styles for screens larger than 48rem */
-
-  /* Adjust the max-width of the #wrapper element */
-  #wrapper {
-    max-width: 64rem;
-  }
-
-  /* Increase the font-size of the h1 element */
-  h1 {
-    font-size: 2.5em;
-  }
-
-  /* Adjust the padding of the #acctLink element */
-  #acctLink {
-    padding-top: 2%;
-  }
-
-  /* Increase the font-size of the navigation links */
-  nav a {
-    font-size: 1.4em;
-  }
-
-  /* Adjust the padding of the main content */
-  main {
-    padding: 30px;
-  }
-
-  /* Increase the size of the DeLorean image */
-  .delorean-container img {
-    width: 90%;
-  }
-
-  /* Adjust the font-size of the DeLorean text */
-  .delorean ul li {
-    font-size: 1.2rem;
-  }
-
-  /* Increase the size of the buttons */
-  button {
-    font-size: 1.5em;
-  }
-
-  /* Adjust the layout of the page content */
-  .page-content {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .upgrades {
-    grid-column: 1 / span 2;
-  }
-
-  /* Move the reviews section to the third column */
-  .reviews {
-    grid-column: 3 / 3;
-    width: 70%;
-  }
-
-  /* Increase the font-size of the review headings */
-  .review h3 {
-    font-size: x-large;
-  }
-
-  /* Increase the font-size of the review text */
-  .review li {
-    font-size: large;
-  }
-
-  /* Adjust the layout of the upgrades section */
-  .upgrades {
-    margin-bottom: 2em;
-  }
-
-  /* Increase the font-size of the upgrades headings */
-  .upgrades h3 {
-    font-size: x-large;
-  }
-
-  /* Increase the size of the upgrade images */
-  .upgrades .item img {
-    height: 100%;
-  }
-
-  /* Adjust the layout of the minigrid */
-  #minigrid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  /* CSS styles for screens smaller than 600px */
-
-  /* Adjust the max-width of the #wrapper element */
-  #wrapper {
-    max-width: 100%;
-  }
-
-  /* Adjust the font-size of the h1 element */
-  h1 {
-    font-size: 1.5em;
-  }
-
-  /* Adjust the padding of the #acctLink element */
-  #acctLink {
-    padding-top: 2%;
-  }
-
-  /* Adjust the font-size of the navigation links */
-  nav a {
-    font-size: 1em;
-  }
-
-  /* Adjust the padding of the main content */
-  main {
-    padding: 10px;
-  }
-
-  /* Adjust the size of the DeLorean image */
-  .delorean-container img {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .delorean {
-    width: 40%;
-    height: 80px;
-    left: 30px;
-    font-size: x-small;
-  }
-
-  #vehicle-status {
-    flex-direction: column-reverse;
-    background-color: lightgray;
-    padding: 2rem;
-  }
-  #upgrades-section,
-  #reviews-section {
-    margin: 0 auto;
-    width: 100%;
-  }
-  #car-details {
-    flex-direction: column;
-  }
-  form fieldset {
-    width: 80%;
-  }
-
-  /* Adjust the font-size of the DeLorean text */
-  .delorean ul li {
-    font-size: 1rem;
-  }
-
-  /* Adjust the size of the buttons */
-  button {
-    font-size: 1em;
-  }
-
-  /* Adjust the layout of the page content */
-  .page-content {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-  }
-
-  /* Move the reviews section below the upgrades section */
-  .reviews {
-    grid-column: 1 / span 2;
-    grid-row: 2 / 2;
-    justify-content: center;
-  }
-
-  /* Adjust the font-size of the review headings */
-  .review h3 {
-    font-size: medium;
-    text-align: center;
-    width: 100%;
-  }
-
-  /* Adjust the font-size of the review text */
-  .review li {
-    font-size: small;
-    text-align: center;
-  }
-
-  /* Adjust the layout of the upgrades section */
-  .upgrades {
-    grid-column: 1 / span 2;
-    grid-row: 1 / 1;
-    margin-bottom: 1em;
-  }
-
-  /* Adjust the font-size of the upgrades headings */
-  .upgrades h3 {
-    font-size: medium;
-  }
-
-  /* Adjust the size of the upgrade images */
-  .upgrades .item img {
-    height: auto;
-  }
-
-  /* Adjust the layout of the minigrid */
-  #minigrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
-    row-gap: 10px;
-    padding-left: 0;
-  }
-}
-
-/*CSS for the Login Page*/
-.login,
-.register {
-  background-color: #3a3a3a;
-}
-
-form fieldset {
-  background-color: rgb(255, 255, 255);
-  width: 50%;
-  margin: auto;
-  padding: 10px;
-}
-
-form fieldset input {
-  display: block;
-  width: 100%;
-  border: 2px black;
-  border-radius: 5px solid black;
-}
-
-form fieldset label {
-  display: block;
-  margin-bottom: 0;
-  margin-top: 1rem;
-}
-
-/* Rounded corners for .submit and .login buttons */
-#submit,
-#login {
-  border-radius: 10px;
-}
-
-#submit {
-  width: 50%;
-  margin: auto;
-  padding: 10px;
-  background-color: #01b0d3;
-  font-size: x-large;
-  font-weight: bold;
-}
-
-form input,
-form label,
-form legend,
-form span {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  margin: 0;
+/* Login form  */
+.input-box {
+  background-color: var(--secondary-bg);
+  color: var(--secondary-fg);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: .5rem;
+  box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.298);
   margin-bottom: 1rem;
-  font-size: medium;
-  font-weight: bold;
+  width: 100%;
+  max-width: 500px;
+  align-self: center;
 }
-
-form legend {
-  border-radius: 10px;
+.input-box label {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  position: relative;
 }
-
-form input {
-  height: auto;
-  padding: 10px;
+.input-box input, .input-box select, .input-box textarea, #classificationList {
+  padding: .5rem;
+  border: none;
 }
-
-.form-italics {
-  display: block;
-  margin: 0.5rem;
-  font-size: small;
-  font-weight: bold;
-  color: rgb(244, 3, 3);
+.input-box input::placeholder, .input-box select::placeholder, .input-box textarea::placeholder {
+  color: rgba(0, 0, 0, 0.27)
 }
-
-input:required:invalid,
-input:focus:invalid,
-textarea:required:invalid {
-  /* insert your own styles for invalid form input */
-  background-color: rgb(132, 130, 130);
+.input-box input:invalid, .input-box textarea:invalid, .input-box select:invalid {
+  border-right: 5px solid red;
 }
-
-input:required:valid,
-textarea:required:valid {
-  /* insert your own styles for valid form input */
-  background-color: rgb(132, 130, 130);
+.input-box input[type="submit"] {
+  font-size: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: fit-content;
+  align-self: center;
+  background-color: var(--pop);
+  color: white;
+  border: none;
+  border-radius: .5rem;
+  box-shadow: 0 0 .5rem rgba(0, 0, 0, 0.368);
 }
-
-.notice {
-  font-size: larger;
-  color: rgb(161, 44, 44);
-  font-style: italic;
-  list-style-type: none;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-
-.management-links {
-  display: block;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  margin: 1rem;
-}
-
-/* input:required:invalid, */
-input:focus:invalid {
-  /* Change border color to red when input is invalid */
-  border-color: red;
-
-  /* Add a red box shadow when input is invalid */
-  box-shadow: 0 0 5px red;
-}
-
-input:-moz-focusring {
-  /* Change border color to green when input is valid */
-  border-color: green;
-
-  /* Add a green box shadow when input is valid */
-  box-shadow: 0 0 5px green;
-}
-
-input:required:valid {
-  /* Change border color to green when input is valid */
-  border-color: green;
-
-  /* Add a green box shadow when input is valid */
-  box-shadow: 0 0 5px green;
-}
-
-/* Hide the valid icon by default */
-.fas.fa-check-circle.valid-icon {
-  display: none;
-  color: green;
+.input-box .reveal-button {
+  color: transparent; /* To make wave happy */
   position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 0;
+  right: 5px;
+  background-color: transparent;
+  background-image: url("/images/site/eye_open.svg");
+  background-size: contain;
+  height: 2rem;
+  width: 2rem;
+  border: 0;
+}
+.input-box .reveal-button.active {
+  background-image: url("/images/site/eye_closed.svg");
+}
+.fine-print {
+  font-size: .75em;
 }
 
-/* Show the valid icon when the input is valid */
-input:required:valid + .valid-icon {
-  display: inline;
+/* Inventory display */
+
+#inventoryDisplay tr td:nth-child(1) {
+  width: auto;
 }
-#inv-display {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+#inventoryDisplay tr td:nth-child(2) {
+  width: 75px;
+  text-align: end;
 }
-#inv-display li {
-  margin: 1rem;
-  width: 300px;
-  border: 1px solid black;
-  padding: 0.5rem;
-  list-style-type: none;
+#inventoryDisplay tr td:nth-child(3) {
+  width: 75px;
+  text-align: end;
+}
+
+/* Message view */
+.message-view {
+  background-color: rgba(255, 255, 255, 0.436);
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  gap: 1rem;
 }
-#inv-display li a {
-  text-decoration: none;
-  color: black;
-}
-
-.management-links {
-  display: block;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  margin: 1rem;
-}
-thead {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-tbody td {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  padding: 1px 1rem;
-}
-p {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-weight: bold;
-}
-#vehicle-details-page {
-  display: flex;
-  padding: 1rem;
-}
-#vehicle-details-page img {
-  width: 50%;
-  align-self: center;
-}
-#vehicle-details {
-  padding: 1rem;
-}
-
-.vehicle-details-list {
-  list-style-type: none;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-.vehicle-details-list li {
-  padding: 0.5rem;
-}
-.vehicle-details-list li:nth-child(even) {
-  background-color: lightgray;
-}
-
-/* Styles for the vehicle details */
-.namePrice {
-  text-align: center;
-}
-
-.namePrice hr {
-  margin: 10px 0;
-}
-
-.namePrice h2 {
+.message-view dl {
+  display: grid;
+  grid-template-columns: min-content 1fr;
   margin: 0;
-  font-size: 1.2em;
-}
+  gap: 1rem;
 
-.namePrice span {
-  font-size: 1em;
-  color: #333;
 }
-
-input:required:invalid,
-textarea:required:invalid {
-  background-color: rgb(132, 130, 130);
+.message-view dl dt, .message-view dl dd {
+  margin: 0;
 }
-
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="text"],
-select#classification_id,
-textarea#inv_description {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-textarea#inv_description {
-  resize: none;
-  height: 200px;
-}
-
-button[type="submit"],
-input[type="submit"] {
-  width: 100%;
-  background-color: #365486;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover,
-input[type="submit"]:hover {
-  background-color: #ffffff;
-  color: #365486;
-  border: 1px solid #365486;
-}
-
-form,
-div.registration-link {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  max-width: 500px;
-  margin: auto;
-}
-
-ul.notice {
-  list-style-type: none;
-  color: red;
-  font-style: italic;
+.message-view dl dt {
   font-weight: bold;
 }
-
-a#classification-button,
-a#inventory-button,
-a#edit-info-button,
-a#inv-management-button {
-  text-decoration: none;
-  margin: 10px auto;
-  width: 50%;
-  display: block;
+.message-view dl dt:after {
+  content: ":";
+}
+.message-pane {
+  white-space: pre-wrap;
+  font-family: var(--body-font);
 }
 
-a#classification-button h2,
-a#inventory-button h2,
-a#edit-info-button h3,
-a#inv-management-button h3 {
-  text-align: center;
-  background-color: #365486;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
+table {
+  border: 1px solid rgba(0, 0, 0, 0.269);
+  padding: .5rem;
+  box-shadow: 0 3px 13px rgba(0, 0, 0, 0.107) inset;
+}
+table thead tr th {
+  border-bottom: 2px solid var(--secondary-bg);
+}
+
+/* Button strip style */
+.button-strip {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.button-strip button, .button-strip a, .button-strip input {
+  box-sizing: border-box;
+  border: 0 solid;
+  border-radius: 0;
+  padding: .5rem;
+  height: 50px;
+  width: fit-content;
+  background-color: white;
   cursor: pointer;
+  transition: .3s box-shadow, .3s transform;
 }
-
-a#classification-button h2:hover,
-a#inventory-button h2:hover,
-a#edit-info-button h3:hover,
-a#inv-management-button h3:hover {
-  background-color: #ffffff;
-  color: #365486;
-  border: 1px solid #365486;
+.button-strip button:hover, .button-strip a:hover, .button-strip input:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.186);
+  transform: translateY(-2px);
+  transition: .3s box-shadow, .3s transform;
 }
-
-table#inventoryDisplay {
-  margin: auto;
-}
-
-a#modify-button,
-a#delete-button {
-  text-decoration: none;
-  margin: 10px auto;
+.button-strip img {
+  height: 100%;
   width: 100%;
-  display: block;
-  text-align: center;
-  background-color: #365486;
-  color: white;
-  padding: 5px 10px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  pointer-events: none;
+}
+.button-strip *:first-child {
+  border-radius: .5rem 0 0 .5rem;
+}
+.button-strip *:last-child {
+  border-radius: 0 .5rem .5rem 0;
+}
+.button-strip *:only-child {
+  border-radius: .5rem;
 }
 
-a#modify-button:hover,
-a#delete-button:hover {
-  background-color: #ffffff;
-  color: #365486;
+footer {
+  background-color: rgba(119, 136, 153, 0.5);
+  font-weight: 500;
 }
 
-tbody > tr {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  max-width: 500px;
-  margin: auto;
-}
+@media screen and (min-width: 700px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    transition: padding 1s;
+  }
+  #wrapper {
+    width: 100%;
+    max-width: 700px;
+    border: 4px solid var(--secondary-bg);
+    border-radius: .5rem;
+    /* padding: .5rem; */
+  }
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  section#reviews {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  section#upgrades {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  ul#inv-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  section.car-listing{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  section.car-listing img {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  section.car-listing div.car-information {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
 
-td {
-  padding: 5px;
-}
-
-div.select-classification {
-  margin: 10px auto;
-  width: 50%;
-  display: block;
 }

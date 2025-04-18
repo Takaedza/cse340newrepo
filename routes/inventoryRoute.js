@@ -1,73 +1,38 @@
-const express = require("express")
-const router = new express.Router() 
-const invController = require("../controllers/invController")
-const inventoryController = require("../controllers/inventoryController")
-const utilities = require("../utilities/")
-const invValidate = require('../utilities/inventory-validation')
+// Needed Resources 
+const express = require("express");
+const router = new express.Router() ;
+const invController = require("../controllers/invController");
+const utilities = require("../utilities");
+const invValidate = require("../utilities/inventory-validation");
 
+
+// Route middleware for management functionality //TODO: Disable management screen
+//router.use(["/add-classification", "/add-inventory", "/edit/:inventoryId", "/update", "/delete/:inventoryId", "/delete/",], utilities.checkLogin);
+router.use(["/add-classification", "/add-inventory", "/edit/:inventoryId", "/update", "/delete/:inventoryId", "/delete/",], utilities.checkAuthorizationManager);
+
+// Misc. routes
 // Route to build inventory by classification view
-router.get("/type/:classification_Id", utilities.handleErrors(invController.buildByClassificationId));
-router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildVehicleDetailsPage));
-router.get("/error", utilities.handleErrors(invController.buildErrorPage));
-router.get("/", utilities.handleErrors(invController.buildManagement));
+router.get("/", utilities.checkAuthorizationManager ,utilities.handleErrors(invController.buildManagementView)); // Had to put checkAuthorizationManager here too. Didn't work above
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
+router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
+
+// Classification management routes
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
+router.post("/add-classification", invValidate.classificationRules(), invValidate.checkClassificationData, utilities.handleErrors(invController.addClassification)); // ...through the appropriate router, where server-side validation middleware is present,... 
+
+// Inventory management routes
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
-router.get("/get-inventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditInventoryView))
-router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteInventoryView))
-router.get("/reviews", utilities.handleErrors(invController.getAllReviews))
+router.post("/add-inventory", invValidate.inventoryRules(), invValidate.checkInventoryData, utilities.handleErrors(invController.addInventory));
 
+// Build edit/update inventory views
+router.get("/edit/:inventoryId", utilities.handleErrors(invController.buildEditInventory));
+router.post("/update/", invValidate.inventoryRules(), invValidate.checkUpdateData, utilities.handleErrors(invController.updateInventory));
 
+// Delete vehicle information routes
+router.get("/delete/:inventoryId", utilities.handleErrors(invController.buildDeleteInventory));
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory));  // Don't need validation
 
-router.use(utilities.checkLogin)
-router.use(utilities.checkAccountType)
+// AJAX inventory api call route
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
-// POST
-router.post(
-    "/add-classification",
-    invValidate.addClassificationRules(),
-    invValidate.checkAddClassificationData,
-    invController.registerNewClassification
-  )
-router.post(
-  "/addReview",
-  invController.addReview
-)
-
-// Add a new review
-router.post("/reviews",
-  invController.addReview
-)
-
-// Edit an existing review
-router.put("/reviews/:id",
-  invController.updateReview
-)
-
-// Delete an existing review
-router.delete("/reviews/:id",
-  invController.deleteReview
-
-)
-
-router.post(
-    "/add-inventory",
-    invValidate.addVehicleRules(),
-    invValidate.checkAddVehicleData,
-    invController.registerNewVehicle
-)
-router.post(
-  "/update/",
-  invValidate.addVehicleRules(),
-  invValidate.checkUpdateData,
-  utilities.handleErrors(invController.updateInventory)
-)
-
-// Route to delete inventory item
-router.post(
-  "/delete/",
-  utilities.handleErrors(invController.deleteInventory)
-)
-  
 module.exports = router;
-
